@@ -17,10 +17,10 @@
     <ng-template>
       <ion-content>
         <ion-searchbar #buscar_cedula [(ngModel)]="cedula" debounce="500" (ionChange)="filtrarClienteCedula()"></ion-searchbar>
-        <ion-list id="cedulas"  *ngFor="let cedula of cedulasFiltradas">
+        <ion-list id="cedulas"  *ngFor="let itemCedula of cedulasFiltradas">
           <ion-item>
-            <ion-label>{{cedula}}</ion-label>
-            <ion-button slot="end">
+            <ion-label>{{itemCedula}}</ion-label>
+            <ion-button slot="end" (click)="buscarPorCedula(itemCedula)">
               CARGAR
             </ion-button>
           </ion-item>
@@ -33,10 +33,10 @@
     <ng-template>
       <ion-content>
         <ion-searchbar #buscar_nombre [(ngModel)]="nombre" debounce="500" (ionChange)="filtrarClienteNombre()"></ion-searchbar>
-        <ion-list id="nombres"  *ngFor="let nombre of nombresFiltrados">
+        <ion-list id="nombres"  *ngFor="let itemNombre of nombresFiltrados">
           <ion-item>
-            <ion-label>{{nombre}}</ion-label>
-            <ion-button slot="end" >
+            <ion-label>{{itemNombre}}</ion-label>
+            <ion-button slot="end" (click)="buscarPorNombre(itemNombre)">
               CARGAR
             </ion-button>
           </ion-item>

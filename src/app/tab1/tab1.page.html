@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      FACTURACIÓN
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,220 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">FACTURACIÓN</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-modal trigger="trigger_buscar_cedula" >
+    <ng-template>
+      <ion-content>
+        <ion-searchbar #buscar_cedula [(ngModel)]="cedula" debounce="500" (ionChange)="filtrarClienteCedula()"></ion-searchbar>
+        <ion-list id="cedulas"  *ngFor="let cedula of cedulasFiltradas">
+          <ion-item>
+            <ion-label>{{cedula}}</ion-label>
+            <ion-button slot="end">
+              CARGAR
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal trigger="trigger_buscar_nombre">
+    <ng-template>
+      <ion-content>
+        <ion-searchbar #buscar_nombre [(ngModel)]="nombre" debounce="500" (ionChange)="filtrarClienteNombre()"></ion-searchbar>
+        <ion-list id="nombres"  *ngFor="let nombre of nombresFiltrados">
+          <ion-item>
+            <ion-label>{{nombre}}</ion-label>
+            <ion-button slot="end" >
+              CARGAR
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-accordion-group value="cabecera">
+
+    <ion-accordion value="cabecera">
+      <ion-item slot="header">
+        <ion-label class="ion-text-center">Cabecera de la Factura</ion-label>
+      </ion-item>
+
+      <ion-list slot="content">
+        <ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-card>
+                  <ion-card-header>
+                    <ion-card-title>Datos del Cliente</ion-card-title>
+                  </ion-card-header>
+
+                  <ion-card-content>
+                    <ion-grid>
+
+                      <ion-row>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Cédula/RUC:</ion-label>
+                            <ion-input [(ngModel)]="cliente.cedula"></ion-input>
+                            <ion-button slot="end" color="danger" expand="block" id="trigger_buscar_cedula">
+                                <ion-icon  name="search-outline" ></ion-icon>
+                            </ion-button>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Nombre:</ion-label>
+                            <ion-input [(ngModel)]="cliente.nombre" (keyup.enter)="cliente.buscarClienteNombre()"></ion-input>
+                            <ion-button slot="end" color="secondary" expand="block" id="trigger_buscar_nombre">
+                              <ion-icon  name="search-outline" ></ion-icon>
+                            </ion-button>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Dirección:</ion-label>
+                            <ion-input [(ngModel)]="cliente.direccion"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Teléfono:</ion-label>
+                            <ion-input [(ngModel)]="cliente.telefono"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Correo:</ion-label>
+                            <ion-input [(ngModel)]="cliente.email"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+
+                    </ion-grid>
+                  </ion-card-content>
+
+                </ion-card>
+              </ion-col>
+
+              <ion-col>
+                <ion-card>
+                  <ion-card-header>
+                    <ion-card-title>Datos de Facturación</ion-card-title>
+                  </ion-card-header>
+
+                  <ion-card-content>
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="fixed">FACTURA #:</ion-label>
+                            <ion-input disabled="true">0001-002-003-4440393</ion-input>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="" style="font-size: 250%; margin-right: 20px">TOTAL:</ion-label>
+                            <ion-input disabled="true" color="danger" style="font-size: 350% ">120.09</ion-input>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                            <ion-button color="danger" fill="solid" size="medium" expand="block">
+                              <ion-icon slot="start" name="save-outline"></ion-icon>
+                              Guardar Factura
+                            </ion-button>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                            <ion-button color="primary" fill="solid" size="medium" expand="block">
+                              <ion-icon slot="start" name="save-outline"></ion-icon>
+                              Recalcular
+                            </ion-button>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                            <ion-button color="warning" fill="solid" size="medium" expand="block">
+                              <ion-icon slot="start" name="save-outline"></ion-icon>
+                              Agrupar Productos
+                            </ion-button>
+                        </ion-col>
+                      </ion-row>
+
+                    </ion-grid>
+                  </ion-card-content>
+
+                </ion-card>
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
+
+        </ion-item>
+      </ion-list>
+    </ion-accordion>
+
+  </ion-accordion-group>
+
+  <ion-accordion-group value="detalle">
+    <ion-accordion value="detalle">
+      <ion-item slot="header">
+        <ion-label class="ion-text-center">Detalle de la Factura</ion-label>
+      </ion-item>
+
+      <ion-list slot="content">
+        <ion-item>
+          <ion-grid>
+
+            <ion-row>
+              <ion-col>
+                <ion-searchbar autocomplete="on" [(ngModel)]="codigoProducto" (ionChange)="buscarPorCodigo(codigoProducto)" animated="true" placeholder="Ingrese el código"></ion-searchbar>
+              </ion-col>
+              <ion-col>
+                <ion-searchbar animated="true" placeholder="Ingrese el nombre"></ion-searchbar>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+
+
+
+              </ion-col>
+            </ion-row>
+
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+
+    </ion-accordion>
+
+  </ion-accordion-group>
+
 </ion-content>

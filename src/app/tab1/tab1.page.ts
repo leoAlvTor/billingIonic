@@ -26,7 +26,7 @@ export class Tab1Page {
   @ViewChild('buscar_nombre') buscarNombre: any;
 
   constructor(public loadingController: LoadingController) {
-    this.cliente = new Cliente();
+    this.cliente = new Cliente(null);
     this.getDatosCliente();
 
   }
@@ -34,8 +34,6 @@ export class Tab1Page {
   async getDatosCliente() {
     this.cedulas = await this.cliente.getCedulas();
     this.nombres = await this.cliente.getNombres();
-    this.cedulas = ['0105652747', '0101130862', '0102488383', '9485833', '9999999999'];
-    this.nombres = ['Leo Alvarado', 'Kevin Cordero', 'Israel Chuchuca', 'Betty Pinzon'];
     this.cedulasFiltradas = this.cedulas;
     this.nombresFiltrados = this.nombres;
   }
@@ -68,6 +66,30 @@ export class Tab1Page {
     });
   }
 
+  async buscarPorCedula(cedula){
+    const loading = await this.loadingController.create({
+      message: 'Buscando cliente por cédula...'
+    });
+    loading.present().then(
+      async ()=>{
+        this.cliente = new Cliente(await this.cliente.buscarCedula(cedula));
+      }
+    ).then(async ()=>{
+      await loading.dismiss();
+    });
+  }
 
+  async buscarPorNombre(nombre){
+    const loading = await this.loadingController.create({
+      message: 'Buscando cliente por nombre...'
+    });
+    loading.present().then(
+      async ()=>{
+        this.cliente = new Cliente(await this.cliente.buscarNombre(nombre));
+      }
+    ).then(async () =>{
+      await loading.dismiss();
+    });
+  }
 
 }
